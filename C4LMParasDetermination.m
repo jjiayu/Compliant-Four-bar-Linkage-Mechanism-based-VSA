@@ -29,19 +29,25 @@ disp(' ');
 %Map the stiffness range to the deflection angle range
 %   Minimum and Maximum stiffness achieved at both two C4LM components reach maximum
 %   negative and postive deflection, respectively
-EpsilonMin = DeflectionAngle(1);
-EpsilonMax = DeflectionAngle(2);
+epsilonMin = DeflectionAngle(1);
+epsilonMax = DeflectionAngle(2);
 StiffnessMin = StiffnessRange(1);
 StiffnessMax = StiffnessRange(2);
 
-a2 = 1/4*(StiffnessMax-StiffnessMin)/(EpsilonMax-EpsilonMin);
-a1 = 1/2*StiffnessMax-2*a2*EpsilonMax;
+a2 = 1/4*(StiffnessMax-StiffnessMin)/(epsilonMax-epsilonMin);
+a1 = 1/2*StiffnessMax-2*a2*epsilonMax;
 
-disp(['a2 = ',num2str(a2)],' Nm/rad^2');
-disp(['a1 = ',num2str(a1)],' Nm/rad');
+disp(['a2 = ',num2str(a2),' Nm/rad^2']);
+disp(['a1 = ',num2str(a1),' Nm/rad']);
 
 
-%% Generate desired torque profile
+%% Generate and plot torque profile determined by a2 and a1
+epsilons = epsilonMin:1e-4:epsilonMax;
+TorquesProfile = a2*epsilons.^2+a1*epsilons;
+
+plot(epsilons,TorquesProfile)
+xlabel('Deflection {\epsilon} ')
+ylabel('Torques Nm')
 
 %% fit parameters of C4LM
 

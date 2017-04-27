@@ -46,8 +46,9 @@ epsilons = epsilonMin:1e-4:epsilonMax;
 TorquesProfile = a2*epsilons.^2+a1*epsilons;
 
 plot(epsilons,TorquesProfile)
-xlabel('Deflection {\epsilon} ')
-ylabel('Torques Nm')
+title(['Torque-Deflection Profile a_{1} = ', num2str(a1), ', a_{2} = ',num2str(a2)])
+xlabel('Deflection of the Entire Compliant Transmission Element {\epsilon} (rad)')
+ylabel('Torques {\tau} (Nm)')
 
 %% fit parameters of C4LM
 

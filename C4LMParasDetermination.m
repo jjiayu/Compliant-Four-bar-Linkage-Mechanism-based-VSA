@@ -43,7 +43,7 @@ disp(['a1 = ',num2str(a1),' Nm/rad']);
 
 %% Generate and plot torque profile determined by a2 and a1
 epsilons = epsilonMin:1e-4:epsilonMax;
-TorquesProfile = a2*epsilons.^2+a1*epsilons;
+TorquesProfile = a2*epsilons.^2+a1*epsilons; %TorqueProfile of a single compiant transmission element
 
 plot(epsilons,TorquesProfile)
 title(['Torque-Deflection Profile a_{1} = ', num2str(a1), ', a_{2} = ',num2str(a2)])
@@ -51,4 +51,6 @@ xlabel('Deflection of the Entire Compliant Transmission Element {\epsilon} (rad)
 ylabel('Torques {\tau} (Nm)')
 
 %% fit parameters of C4LM
+%Parameters need to be fitted: alpha_0,r1,r2,r3,r4,k2,k3,k4
+
 

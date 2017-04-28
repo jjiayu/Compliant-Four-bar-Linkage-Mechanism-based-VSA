@@ -59,5 +59,13 @@ refTorque = TorquesProfile/n; %y: desired torque profile for a single four-bar l
 
 %Parameters need to be fitted: alpha0,r1,r2,r3,r4,k2,k3,k4
 %initial guess of variables to be optimized
-alpha0 = 1.0; r1 = 1.0; r2 = 1.0; r3 = 1.0; r4 = 1.0; k2 = 1.0; k3 = 1.0; k4 = 1.0;
+alpha0 = 0.5; r1 = 0.05; r2 = 0.05; r3 = 0.05; r4 = 0.05; k2 = 5.0; k3 = 5.0; k4 = 5.0;
+%alpha0 = 1.0; r1 = 1.0; r2 = 1.0; r3 = 1.0; r4 = 1.0; k2 = 1.0; k3 = 1.0; k4 = 1.0;
 x0 = [alpha0, r1, r2, r3, r4, k2, k3, k4]; %put into vector form
+
+lb = zeros(1,8);
+%ub = [0.5,20/1000,20/1000,20/1000,20/1000,5,5,5];
+ub = [2*pi/n,46/2/1000,(46-18)/2/1000,(46-18)/2/1000,(46-18)/2/1000,10,10,10];
+
+fun = @(x)C4LMTorque(x,epsilons,refTorque);
+x = lsqnonlin(fun,x0,lb,ub)

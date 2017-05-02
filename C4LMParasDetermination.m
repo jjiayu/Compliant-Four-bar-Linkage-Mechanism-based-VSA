@@ -43,7 +43,10 @@ disp(' ');
 
 
 %% Generate and plot torque profile determined by a2 and a1
-epsilons = epsilonMin:1e-4:epsilonMax;
+epsilonMin = -0.1273*pi;
+epsilonMax = 0.1273*pi;
+epsilons = linspace(epsilonMin,epsilonMax,100);
+%epsilons = epsilonMin:1e-4:epsilonMax;
 TorquesProfile = a2*epsilons.^2+a1*epsilons; %TorqueProfile of a single compiant transmission element
 
 plot(epsilons,TorquesProfile)
@@ -59,13 +62,22 @@ refTorque = TorquesProfile/n; %y: desired torque profile for a single four-bar l
 
 %Parameters need to be fitted: alpha0,r1,r2,r3,r4,k2,k3,k4
 %initial guess of variables to be optimized
+alpha0 = pi/3; r1 = 50.0; r2 = 50.0; r3 = 50.0; r4 = 50.0; k2 = 10.0; k3 = 10.0; k4 = 10.0;
 %alpha0 = 0.4; r1 = 0.02; r2 = 0.02; r3 = 0.01; r4 = 0.02; k2 = 1.5; k3 = 3.0; k4 = 4.0;
-alpha0 = 1.0; r1 = 1.0; r2 = 1.0; r3 = 1.0; r4 = 1.0; k2 = 1.0; k3 = 1.0; k4 = 1.0;
+%alpha0 = pi/n; r1 = 30/1000; r2 = 15/1000; r3 = 10/1000; r4 = 12/1000; k2 = 1.0; k3 = 1.0; k4 = 1.0;
 x0 = [alpha0, r1, r2, r3, r4, k2, k3, k4]; %put into vector form
 
-lb = zeros(1,8);
-ub = [0.5,20/1000,20/1000,20/1000,20/1000,5,5,5];
+lb = [0.1,3,3,3,3,0.2,0.2,0.2];
+ub = [pi/2/n,46/3,46/3,46/3,46/3,3,3,3];
 %ub = [2*pi/n,46/2/1000,(46-18)/2/1000,(46-18)/2/1000,(46-18)/2/1000,10,10,10];
 
 fun = @(x)C4LMTorque(x,epsilons,refTorque);
 x = lsqnonlin(fun,x0,lb,ub)
+
+%% Draw CTE (Compliant Transimission Ele1ment) Torque-Deflection Curves
+FinalTorque = n*CTETorque(x,epsilons);
+plot(epsilons,FinalTorque)
+hold on
+plot(epsilons,TorquesProfile)
+legend('fitted torque','ref torque')
+hold off

@@ -33,9 +33,9 @@ psi3s = gamas-gama0-betas+beta0;
 psi4s = gamas-gama0;
 
 %Calculate troques
-T2 = k2.*psi2s;
-T3 = k3.*psi3s;
-T4 = k4.*psi4s;
+T2 = k2*psi2s;
+T3 = k3*psi3s;
+T4 = k4*psi4s;
 
 h32s = (r2*sin(gamas-alphas))./(r3*sin(betas-gamas));
 h42s = (r2*sin(betas-alphas))./(r4*sin(betas-gamas));
